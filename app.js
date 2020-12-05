@@ -8,6 +8,7 @@ const db = require("./config/connection");
 var teacherRouter = require("./routes/teacher");
 var usersRouter = require("./routes/users");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 var app = express();
 
@@ -30,7 +31,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // });
 
 mongoose
-  .connect("mongodb://localhost:27017/resultPublication")
+  .connect("mongodb://localhost:27017/" + process.env.COLLECTION)
   .then(() => {
     console.log("Database connection successful");
   })
