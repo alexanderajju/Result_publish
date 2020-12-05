@@ -24,53 +24,57 @@ POST http://localhost:3000/teacher/token
 Content-Type: application/json
 
 {
-    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWp1IiwiaWF0IjoxNjA3MDkyMjQwfQ.qDETf_A-dggxbhZJfjGTN1j6lruccA__Z_e3Fp0wYn4"
+    "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDcxNTkzNzV9.259alEScTXv1dOQQ83a3rthQArVtiqoI3W2p5uDyA3Q"
 }
 
 ###
 POST http://localhost:3000/teacher/addstudent http/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWp1IiwiaWF0IjoxNjA3MDgyNTYxLCJleHAiOjE2MDcwODI2MjF9.y9vsy232hv3qs3Sbo05Rvilfdp361-izil3uybEwz-k
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDcxNTkyMTAsImV4cCI6MTYwNzE1OTI3MH0.WzeFXHlmwEkqsISQj3MAiHUc8DylSekipGoGu_iGd5k
 
 {
     
-    "name":"aju",
-    "Register Number":"CHN17EE006",
-    "Subject1":20,
-    "Subject2":30,
-    "Subject3":35,
-    "Total":85
+    "name":"test",
+    "Register_Number":"HAJHDHade",
+    "Subject_1":50,
+    "Subject_2":40,
+    "Subject_3":10,
+    "total":100
+
 
 }
 ###
 GET http://localhost:3000/teacher/editstudent http/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWp1IiwiaWF0IjoxNjA3MDkyMzQwLCJleHAiOjE2MDcwOTI0MDB9.XRY23EBSUv_HUMKs3qRYQiPO7AjVMihGoLwelAkBOPE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDcxNTk0MDEsImV4cCI6MTYwNzE1OTQ2MX0.2ujkzu8twzQ1HW7YEKX9ttw25is2auwCljWLEqeFVyY
 
 {
-    "id":"5fca224db73fb90c381449d4"
+    "id":"5fcb4dd17bd0e53024346384"
 }
 ###
 PUT http://localhost:3000/teacher/editstudent http/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWp1IiwiaWF0IjoxNjA3MDkyMzQwLCJleHAiOjE2MDcwOTI0MDB9.XRY23EBSUv_HUMKs3qRYQiPO7AjVMihGoLwelAkBOPE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDcxNTk0NTEsImV4cCI6MTYwNzE1OTUxMX0.IJatk-sewu0q-xKVKklMorzrkOmj0TtYl6E_JMO4e_I
 
 {
-    "_id": "5fca224db73fb90c381449d4",
-    "name": "ajualex",
-    "Register_Number": "CHN17EE006",
-    "Subject1": 20,
-    "Subject2": 30,
-    "Subject3": 35,
-    "Total": 85
+    "_id": "5fcb4dd17bd0e53024346384",
+    "name": "edger thomas",
+    "Register_Number": "dxfhdfhg",
+    "Subject_1": 30,
+    "Subject_2": 20,
+    "Subject_3": 25,
+    "total": 75
+   
 }
+
+
 ###
 DELETE http://localhost:3000/teacher/deletestudent http/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiYWp1IiwiaWF0IjoxNjA3MDc4MTg2LCJleHAiOjE2MDcwNzgyNDZ9.U_LHlS1c7X-SPjX8l4IZokGJ-7I41Xan1c64_NrrK9c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDcxNTk0NTEsImV4cCI6MTYwNzE1OTUxMX0.IJatk-sewu0q-xKVKklMorzrkOmj0TtYl6E_JMO4e_I
 
 {
-    "_id":"5fca0640d5a6d13790958c9f"
+    "_id":"5fcb4dd17bd0e53024346384"
 }
 ###
 GET http://localhost:3000 http/1.1

@@ -7,6 +7,7 @@ var cors = require("cors");
 const db = require("./config/connection");
 var teacherRouter = require("./routes/teacher");
 var usersRouter = require("./routes/users");
+const mongoose = require("mongoose");
 
 var app = express();
 
@@ -20,13 +21,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-db.connect((err) => {
-  if (err) {
-    console.log("Error Occured" + err);
-  } else {
-    console.log("[+]DB connected to port 27017");
-  }
-});
+// db.connect((err) => {
+//   if (err) {
+//     console.log("Error Occured" + err);
+//   } else {
+//     console.log("[+]DB connected to port 27017");
+//   }
+// });
+
+mongoose
+  .connect("mongodb://localhost:27017/resultPublication")
+  .then(() => {
+    console.log("Database connection successful");
+  })
+  .catch((err) => {
+    console.error("Database connection error");
+  });
 
 app.use("/teacher", teacherRouter);
 app.use("/", usersRouter);

@@ -9,17 +9,9 @@ const {
   deleteStudent,
 } = require("../Helpers/helpers");
 const { doLogIn } = require("../Helpers/userhelpers");
-
-const posts = [
-  {
-    username: "aju",
-    title: "Post1",
-  },
-  {
-    username: "edger",
-    title: "Post2",
-  },
-];
+const Student = require("../models/students");
+const mongoose = require("mongoose");
+const { response } = require("express");
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
@@ -38,9 +30,6 @@ function generateAccesstoken(user) {
 }
 let refershTokens = [];
 /* GET home page. */
-router.get("/", authenticateToken, function (req, res, next) {
-  res.json(posts.filter((post) => post.username === req.user.name));
-});
 router.post("/login", (req, res) => {
   doLogIn(req.body.email, req.body.password).then((resposne) => {
     // console.log(resposne);
@@ -80,24 +69,37 @@ router.post("/token", (req, res) => {
 });
 router.post("/addstudent", authenticateToken, (req, res) => {
   // console.log(req.body);
+
   addStudent(req.body).then((resposne) => {
-    res.json({ id: resposne, status: "data inserted Successfully" });
+    res.json({ response: resposne, status: "data inserted Successfully" });
   });
 });
 router.get("/editstudent", authenticateToken, (req, res) => {
   // console.log(req.body.id);
+
   getStudent(req.body.id).then((student) => {
+    res.status(200);
     res.json({ student });
   });
 });
 router.put("/editstudent", authenticateToken, (req, res) => {
+  console.log(req.body);
+  // const updateOps = {}
+  // for (const ops of req.body)
   editStudent(req.body._id, req.body).then((resposne) => {
+    console.log(resposne);
+    if (resposne.status) return res.json({ resposne: "Error while editing" });
+
     res.json({ resposne: resposne });
   });
 });
 router.delete("/deletestudent", authenticateToken, (req, res) => {
-  deleteStudent(req.body._id).then((reposne) => {
-    res.json({ resposne: reposne });
+  deleteStudent(req.body._id).then((resposne) => {
+    if (resposne.status) {
+      return res.status(500).json({ response: resposne.status });
+    } else {
+      res.status(202).json({ resposne: resposne.result });
+    }
   });
 });
 module.exports = router;

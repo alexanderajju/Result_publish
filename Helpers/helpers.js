@@ -1,70 +1,96 @@
-const db = require("../config/connection");
+const { response } = require("express");
 const Promise = require("promise");
-const { resolve } = require("promise");
 const ObjectId = require("mongodb").ObjectId;
+const Student = require("../models/students");
 
 module.exports = {
   addStudent: (data) => {
     return new Promise((resolve, reject) => {
-      db.get()
-        .collection("students")
-        .insertOne(data)
-        .then((response) => {
-          console.log(response.ops[0]._id);
-          resolve(response.ops[0]._id);
-        });
+      console.log(data);
+      const student = new Student({
+        name: data.name,
+        Register_Number: data.Register_Number,
+        Subject_1: data.Subject_1,
+        Subject_2: data.Subject_2,
+        Subject_3: data.Subject_3,
+        total: data.total,
+      });
+      student
+        .save()
+        .then((result) => {
+          console.log(result);
+          resolve(result);
+        })
+        .catch((err) => console.log(err));
     });
   },
   getStudent: (id) => {
     return new Promise(async (resolve, reject) => {
-      let student = await db
-        .get()
-        .collection("students")
-        .aggregate([
-          {
-            $match: { _id: ObjectId(id) },
-          },
-        ])
-        .toArray();
-      resolve(student);
+      Student.findById({
+        _id: id,
+      })
+        .exec()
+        .then((student) => {
+          console.log(student);
+          resolve(student);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   },
   editStudent: (id, body) => {
     return new Promise((resolve, reject) => {
-      db.get()
-        .collection("students")
-        .updateOne(
-          { _id: ObjectId(id) },
-          {
-            $set: {
-              name: body.name,
-              Register_Number: body.Register_Number,
-              Subject1: body.Subject1,
-              Subject2: body.Subject2,
-              Subject3: body.Subject3,
-              Total: body.Total,
-            },
-          }
-        );
-      resolve({ status: "successfully edited" });
+      Student.update(
+        { _id: id },
+        {
+          $set: {
+            name: body.name,
+            Register_Number: body.Register_Number,
+            Subject_1: body.Subject_1,
+            Subject_2: body.Subject_2,
+            Subject_3: body.Subject_3,
+            total: body.total,
+          },
+        }
+      )
+        .exec()
+        .then((response) => {
+          console.log(response);
+          resolve(response);
+        })
+        .catch((err) => {
+          console.log(err);
+          resolve({ status: "error" });
+        });
     });
   },
   deleteStudent: (id) => {
     return new Promise((resolve, reject) => {
-      db.get()
-        .collection("students")
-        .removeOne({ _id: ObjectId(id) });
-      resolve({ status: "student deleted" });
+      Student.remove({ _id: id })
+        .exec()
+        .then((resposne) => {
+          if (resposne) {
+            resolve({ result: "student deleted" });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          resolve({ status: "error while deleteing" });
+        });
     });
   },
   getall: () => {
     return new Promise(async (resolve, reject) => {
-      db.get()
-        .collection("students")
-        .find()
-        .toArray()
+      await Student.find()
+        .exec()
         .then((resp) => {
-          resolve(resp);
+          console.log(resp);
+          resolve({ response: resp });
+        })
+        .catch((err) => {
+          console.log(err);
+          resolve({ error: err });
         });
     });
   },
